@@ -2,9 +2,11 @@ const oracledb = require('oracledb');
 
 // Configuración de la conexión
 const dbConfig = {
-  user: 'DejandoHuellaDB',
+  //user: 'DejandoHuellaDB', 
+  user: 'HR',
   password: '12345',
-  connectString: 'localhost:1521/orcl' // Ajusta según tu configuración
+  //connectString: 'localhost:1521/orcl' 
+  connectString: 'localhost:1522/orcl' 
 };
 
 // Inicializar el cliente Oracle

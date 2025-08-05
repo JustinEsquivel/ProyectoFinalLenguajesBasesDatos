@@ -50,6 +50,7 @@ app.get('/', (req, res) => {
 // Rutas API
 app.use('/api', require('./routes/usuarioRoutes'));
 app.use('/auth', require('./routes/authRoutes'));
+app.use('/auth', require('./routes/voluntarioRoutes'));
 
 // Inicia el servidor
 const PORT = process.env.PORT || 5000;
