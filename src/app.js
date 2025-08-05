@@ -51,6 +51,8 @@ app.get('/', (req, res) => {
 app.use('/api', require('./routes/usuarioRoutes'));
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/auth', require('./routes/voluntarioRoutes'));
+app.use('/auth', require('./routes/reporteRoutes'));
+app.use('/auth', require('./routes/inventarioRoutes'));
 
 // Inicia el servidor
 const PORT = process.env.PORT || 5000;

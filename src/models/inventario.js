@@ -1,26 +1,27 @@
 const oracledb = require('oracledb');
 const { getConnection, closeConnection, getNextSeqValue } = require('../config/db');
 
-class Voluntario {
+class Inventario {
   // CREATE
   static async create(data) {
     let connection;
     try {
-      const seqId = await getNextSeqValue('seq_voluntarios');
+      const seqId = await getNextSeqValue('seq_inventario');
       data.id = seqId;
 
       connection = await getConnection();
       await connection.execute(
-        `INSERT INTO Voluntarios (id, usuario, nombre, fechainicio, fechafin, horas, estado) 
-         VALUES (:id, :usuario, :nombre, :fechainicio, :fechafin, :horas, :estado)`,
+        `INSERT INTO Inventario (id, nombre, tipo, cantidad, fechaingreso, fechacaducidad, proveedor, fuente) 
+         VALUES (:id, :nombre, :tipo, :cantidad, :fechaingreso, :fechacaducidad, :proveedor, :fuente)`,
         {
           id: data.id,
-          usuario: data.usuario,
           nombre: data.nombre,
-          fecha_inicio: data.fecha_inicio,
-          fecha_fin: data.fecha_fin,
-          horas: data.horas,
-          estado: data.estado
+          tipo: data.tipo,
+          cantidad: data.cantidad,
+          fechaingreso: data.fechaingreso,
+          fechacaducidad: data.fechacaducidad,
+          proveedor: data.proveedor,
+          fuente: data.fuente
         },
         { autoCommit: true }
       );
@@ -38,7 +39,7 @@ class Voluntario {
     try {
       connection = await getConnection();
       const result = await connection.execute(
-        `SELECT * FROM Voluntarios`,
+        `SELECT * FROM Inventario`,
         [],
         { outFormat: oracledb.OBJECT }
       );
@@ -56,7 +57,7 @@ class Voluntario {
     try {
       connection = await getConnection();
       const result = await connection.execute(
-        `SELECT * FROM Voluntarios WHERE id = :id`,
+        `SELECT * FROM Inventario WHERE id = :id`,
         [id],
         { outFormat: oracledb.OBJECT }
       );
@@ -74,7 +75,7 @@ class Voluntario {
     try {
       connection = await getConnection();
       const result = await connection.execute(
-        `SELECT * FROM Voluntarios WHERE LOWER(nombre) LIKE '%' || LOWER(:nombre) || '%'`,
+        `SELECT * FROM Inventario WHERE LOWER(nombre) LIKE '%' || LOWER(:nombre) || '%'`,
         [nombre],
         { outFormat: oracledb.OBJECT }
       );
@@ -92,17 +93,18 @@ class Voluntario {
     try {
       connection = await getConnection();
       const result = await connection.execute(
-        `UPDATE Voluntarios 
-        SET nombre = :nombre, usuario = :usuario, fechainicio = :fechainicio, fechafin = :fechafin, horas = :horas, estado = :estado
+        `UPDATE Inventarios 
+        SET usuario = :usuario, fecha = :fecha, mascota = :mascota, provincia = :provincia, canton = :canton, distrito = :distrito, detalle = :detalles
          WHERE id = :id`,
         {
           id,
           usuario: data.usuario,
-          nombre: data.nombre,
-          fecha_inicio: data.fecha_inicio,
-          fecha_fin: data.fecha_fin,
-          horas: data.horas,
-          estado: data.estado
+          fecha: data.fecha,
+          mascota: data.mascota,
+          provincia: data.provincia,
+          canton: data.canton,
+          distrito: data.distrito,
+          detalles: data.detalles
         },
         { autoCommit: true }
       );
@@ -120,7 +122,7 @@ class Voluntario {
     try {
       connection = await getConnection();
       const result = await connection.execute(
-        `DELETE FROM Voluntarios WHERE id = :id`,
+        `DELETE FROM Inventarios WHERE id = :id`,
         [id],
         { autoCommit: true }
       );
@@ -133,4 +135,4 @@ class Voluntario {
   }
 }
 
-module.exports = Voluntario;
+module.exports = Inventario;

@@ -6,8 +6,8 @@ CREATE TABLE Roles (
 
 CREATE TABLE Usuarios (
     id NUMBER PRIMARY KEY,
-    nombre VARCHAR2(100) NOT NULL CHECK (REGEXP_LIKE(nombre, '^[A-ZÁÉÍÓÚ][a-záéíóú\s''-]+$')),
-    apellido VARCHAR2(100) NOT NULL CHECK (REGEXP_LIKE(apellido, '^[A-ZÁÉÍÓÚ][a-záéíóú\s''-]+$')),
+    nombre VARCHAR2(100) NOT NULL CHECK (REGEXP_LIKE(nombre, '^[A-Zï¿½ï¿½ï¿½ï¿½ï¿½][a-zï¿½ï¿½ï¿½ï¿½ï¿½\s''-]+$')),
+    apellido VARCHAR2(100) NOT NULL CHECK (REGEXP_LIKE(apellido, '^[A-Zï¿½ï¿½ï¿½ï¿½ï¿½][a-zï¿½ï¿½ï¿½ï¿½ï¿½\s''-]+$')),
     email VARCHAR2(100) NOT NULL CHECK (REGEXP_LIKE(email, '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')),
     password VARCHAR2(100) NOT NULL CHECK (LENGTH(password) >= 6),
     telefono VARCHAR2(10) NOT NULL CHECK (REGEXP_LIKE(telefono, '^[0-9]{8,10}$')),
@@ -62,7 +62,7 @@ CREATE TABLE Reportes (
     CONSTRAINT fk_reporte_mascota FOREIGN KEY (mascota) REFERENCES Mascotas(id)
 );
 
-CREATE TABLE Campañas (
+CREATE TABLE Campaï¿½as (
     id NUMBER PRIMARY KEY,
     nombre VARCHAR2(100) NOT NULL,
     descripcion VARCHAR2(500) NOT NULL,
@@ -71,17 +71,17 @@ CREATE TABLE Campañas (
     objetivo NUMBER NOT NULL,
     estado VARCHAR2(20) NOT NULL CHECK (estado IN ('Activa', 'Inactiva')),
     usuario NUMBER NOT NULL,
-    CONSTRAINT fk_campaña_usuario FOREIGN KEY (usuario) REFERENCES Usuarios(id)
+    CONSTRAINT fk_campaï¿½a_usuario FOREIGN KEY (usuario) REFERENCES Usuarios(id)
 );
 
-CREATE TABLE DonacionesCampañas (
+CREATE TABLE DonacionesCampaï¿½as (
     id NUMBER PRIMARY KEY,
     fecha DATE NOT NULL,
     cantidad NUMBER NOT NULL,
     usuario NUMBER NOT NULL,
-    campaña NUMBER NOT NULL,
+    campaï¿½a NUMBER NOT NULL,
     CONSTRAINT fk_donacion_usuario FOREIGN KEY (usuario) REFERENCES Usuarios(id),
-    CONSTRAINT fk_donacion_campaña FOREIGN KEY (campaña) REFERENCES Campañas(id)
+    CONSTRAINT fk_donacion_campaï¿½a FOREIGN KEY (campaï¿½a) REFERENCES Campaï¿½as(id)
 );
 
 CREATE TABLE Inventario (
@@ -92,7 +92,7 @@ CREATE TABLE Inventario (
     fechaIngreso DATE NOT NULL,
     fechaCaducidad DATE,
     proveedor VARCHAR2(100) NOT NULL,
-    fuente VARCHAR2(20) NOT NULL CHECK (fuente IN ('Compra', 'Donación'))
+    fuente VARCHAR2(20) NOT NULL CHECK (fuente IN ('Compra', 'Donaciï¿½n'))
 );
 
 CREATE TABLE Eventos (
@@ -118,6 +118,7 @@ CREATE TABLE EventosAsistencia (
 
 CREATE TABLE Voluntarios (
     id NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL,
     usuario NUMBER NOT NULL,
     fechaInicio DATE NOT NULL,
     fechaFin DATE,
@@ -126,7 +127,7 @@ CREATE TABLE Voluntarios (
     CONSTRAINT fk_voluntario_usuario FOREIGN KEY (usuario) REFERENCES Usuarios(id)
 );
 
--- Tabla para las actividades de los voluntarios (relación muchos a muchos)
+-- Tabla para las actividades de los voluntarios (relaciï¿½n muchos a muchos)
 CREATE TABLE VoluntariosActividades (
     voluntario_id NUMBER,
     actividad VARCHAR2(100),
@@ -134,23 +135,23 @@ CREATE TABLE VoluntariosActividades (
     CONSTRAINT fk_va_voluntario FOREIGN KEY (voluntario_id) REFERENCES Voluntarios(id)
 );
 
--- Tabla para contadores (equivalente a la colección Counters en MongoDB)
+-- Tabla para contadores (equivalente a la colecciï¿½n Counters en MongoDB)
 CREATE TABLE Contadores (
     id VARCHAR2(50) PRIMARY KEY,
     seq NUMBER NOT NULL
 );
 
--- Índices adicionales
+-- ï¿½ndices adicionales
 CREATE INDEX idx_usuarios_email ON Usuarios(email);
 CREATE INDEX idx_mascotas_nombre ON Mascotas(nombre);
 CREATE INDEX idx_mascotas_estado ON Mascotas(estado);
 CREATE INDEX idx_historial_mascota ON HistorialMedico(mascota);
 CREATE INDEX idx_adopciones_usuario ON Adopciones(usuario);
 CREATE INDEX idx_reportes_usuario ON Reportes(usuario);
-CREATE INDEX idx_campañas_nombre ON Campañas(nombre);
-CREATE INDEX idx_campañas_estado ON Campañas(estado);
-CREATE INDEX idx_donaciones_usuario ON DonacionesCampañas(usuario);
-CREATE INDEX idx_donaciones_campaña ON DonacionesCampañas(campaña);
+CREATE INDEX idx_campaï¿½as_nombre ON Campaï¿½as(nombre);
+CREATE INDEX idx_campaï¿½as_estado ON Campaï¿½as(estado);
+CREATE INDEX idx_donaciones_usuario ON DonacionesCampaï¿½as(usuario);
+CREATE INDEX idx_donaciones_campaï¿½a ON DonacionesCampaï¿½as(campaï¿½a);
 CREATE INDEX idx_inventario_nombre ON Inventario(nombre);
 CREATE INDEX idx_inventario_fuente ON Inventario(fuente);
 CREATE INDEX idx_eventos_nombre ON Eventos(nombre);
@@ -167,7 +168,7 @@ CREATE SEQUENCE seq_mascotas START WITH 7;
 CREATE SEQUENCE seq_historial_medico START WITH 4;
 CREATE SEQUENCE seq_adopciones START WITH 4;
 CREATE SEQUENCE seq_reportes START WITH 5;
-CREATE SEQUENCE seq_campañas START WITH 4;
+CREATE SEQUENCE seq_campaï¿½as START WITH 4;
 CREATE SEQUENCE seq_donaciones START WITH 4;
 CREATE SEQUENCE seq_inventario START WITH 4;
 CREATE SEQUENCE seq_eventos START WITH 4;

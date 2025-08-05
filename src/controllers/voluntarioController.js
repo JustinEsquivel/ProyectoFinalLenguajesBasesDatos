@@ -17,7 +17,7 @@ class VoluntarioController {
       if (voluntario) {
         res.status(200).json(voluntario);
       } else {
-        res.status(404).json({ error: 'Campaña no encontrada' });
+        res.status(404).json({ error: 'Voluntario no encontrado' });
       }
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -48,7 +48,7 @@ class VoluntarioController {
       if (voluntario) {
         res.status(200).json(voluntario);
       } else {
-        res.status(404).json({ error: 'Campaña no encontrada' });
+        res.status(404).json({ error: 'Voluntario no encontrado' });
       }
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -59,9 +59,9 @@ class VoluntarioController {
     try {
       const success = await voluntarioService.deleteVoluntario(req.params.id);
       if (success) {
-        res.status(200).json({ message: 'Campaña eliminada correctamente' });
+        res.status(200).json({ message: 'Voluntario eliminado correctamente' });
       } else {
-        res.status(404).json({ error: 'Campaña no encontrada' });
+        res.status(404).json({ error: 'Voluntario no encontrado' });
       }
     } catch (error) {
       res.status(400).json({ error: error.message });

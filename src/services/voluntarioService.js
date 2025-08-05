@@ -1,7 +1,7 @@
 const Voluntario = require('../models/voluntario');
 
 class VoluntarioService {
-  // Obtener todas las voluntarios
+  // Obtener todos los voluntarios
   async getAllVoluntarios() {
     return await Voluntario.findAll();
   }
@@ -16,17 +16,17 @@ class VoluntarioService {
     return await Voluntario.searchByNombre(nombre);
   }
 
-  // Crear una nueva voluntario
+  // Crear una nuevo voluntario
   async createVoluntario(data) {
     return await Voluntario.create(data);
   }
 
-  // Actualizar una voluntario
+  // Actualizar un voluntario
   async updateVoluntario(id, data) {
     return await Voluntario.update(id, data);
   }
 
-  // Eliminar una voluntario
+  // Eliminar un voluntario
   async deleteVoluntario(id) {
     return await Voluntario.delete(id);
   }
